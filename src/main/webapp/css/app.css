@@ -1,0 +1,7 @@
+table.ui-panelgrid tr, table.ui-panelgrid td {
+   border: 0px solid black;
+} 
+
+.ui-panelgrid .ui-panelgrid-cell {
+    border-width: 0px;
+}
