@@ -1,9 +1,18 @@
 package sk.foxconn.caradmin.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "CARS")
 public class Car extends BaseModel {
+ 
  private String brand;
  private String model;
+ @Column(name = "year_of_creation")
  private int yearOfCreation;
+ @Column(name = "internal_id")
  private String internalId;
 
  public String getBrand() {
