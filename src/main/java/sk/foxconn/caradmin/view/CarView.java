@@ -1,15 +1,13 @@
 package sk.foxconn.caradmin.view;
 
-import sk.foxconn.caradmin.cdi.MsgResource;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.model.DataModel;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.SelectableDataModel;
-import org.primefaces.model.SelectableDataModelWrapper;
 import sk.foxconn.caradmin.logic.CarAdmin;
 import sk.foxconn.caradmin.model.Car;
 
@@ -20,22 +18,23 @@ public class CarView extends BaseView {
  @Inject
  private CarAdmin carAdmin;
  
- private Car selectedCar;
+ @Inject
+ private CarViewPageContext viewContext;
  
  private List<Car> selectedCars;
  
  public SelectableDataModelImpl getCars() {
   return new SelectableDataModelImpl(carAdmin.getAllCars());
  }
-  
+
  public Car getSelectedCar() {
-  return selectedCar;
+  return viewContext.getSelectedCar();
  }
 
  public void setSelectedCar(Car selectedCar) {
-  this.selectedCar = selectedCar;
+  viewContext.setSelectedCar(selectedCar);
  }
-
+  
  public List<Car> getSelectedCars() {
   return selectedCars;
  }
@@ -63,6 +62,29 @@ public class CarView extends BaseView {
    Long id = Long.parseLong(rowKey);
    return carAdmin.getCarById(id);
   }
+ }
+
+ public boolean isEditMode() {
+  return viewContext.isEditMode();
+ }
+
+ public void setEditMode(boolean editMode) {
+  viewContext.setEditMode(editMode);
+ }
+ 
+ public void editCar() {
+  viewContext.setEditMode(true);
+ }
+ 
+ public void saveCar() {
+  viewContext.setEditMode(false);
+  if (carAdmin.updateCar(getSelectedCar())) {
+   addMessage("Save sa podaril");
+  }
+ }
+ 
+ public void cancelEditCar() {
+  viewContext.setEditMode(false);
  }
  
 }

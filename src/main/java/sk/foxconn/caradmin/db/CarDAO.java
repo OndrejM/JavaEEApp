@@ -20,6 +20,10 @@ public class CarDAO extends BaseDAO {
  public void store(Car car) {
   em.persist(car);
  }
+ 
+ public Car update(Car car) {
+  return em.merge(car);
+ }
 
  public Car getCarById(Long id) {
   return em.find(Car.class, id);

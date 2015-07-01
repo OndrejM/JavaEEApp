@@ -1,13 +1,12 @@
 package sk.foxconn.caradmin.logic;
 
-import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import sk.foxconn.caradmin.db.CarDAO;
 import sk.foxconn.caradmin.model.Car;
 
-@RequestScoped
+@Stateless
 public class CarAdmin extends BaseLogic {
  
  @Inject
@@ -19,5 +18,10 @@ public class CarAdmin extends BaseLogic {
 
  public Car getCarById(Long id) {
   return carDAO.getCarById(id);
+ }
+ 
+ public boolean updateCar(Car car) {
+  carDAO.update(car);
+  return true;
  }
 }

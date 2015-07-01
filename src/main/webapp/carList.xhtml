@@ -5,14 +5,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
- <h:form>
- <p:dataTable value="#{carController.cars}" var="car" emptyMessage="#{msg.cars_emptyMessage}"
-              selectionMode="multiple" selection="#{carController.selectedCars}"
+ <p:dataTable id="carTable" value="#{carController.cars}" var="car" emptyMessage="#{msg.cars_emptyMessage}"
+              selectionMode="single" selection="#{carController.selectedCar}"
               paginator="true"
               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
               rowsPerPageTemplate="5,10,15"
               rows="10"
-              rowKey="#{car.id}">
+              rowKey="#{car.id}" >
+  <p:ajax event="rowSelect" update="editCarForm:editPanel"/>
+  <p:ajax event="rowUnselect" update="editCarForm:editPanel"/>
   <p:column headerText="#{msg.cars_internalID}">
    #{car.internalId}
   </p:column>
@@ -26,10 +27,4 @@
    #{car.yearOfCreation}
   </p:column>
  </p:dataTable>
-  <p:commandButton value="Zobraz vybrane" update="vypis"/>
- <p:dataList id="vypis" value="#{carController.selectedCars}" var="car">
-  #{car.internalId} - #{car.brand},
- </p:dataList>
- </h:form>
- 
 </ui:composition>
